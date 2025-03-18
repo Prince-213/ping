@@ -1,6 +1,6 @@
 import React from "react";
 
-const ContactTile = ({
+const ClassicContactTile = ({
   title,
   content,
   icon,
@@ -11,13 +11,13 @@ const ContactTile = ({
   icon: React.ReactNode;
   accentColor: string;
 }) => {
+  console.log(accentColor);
   return (
-    <div className=" flex lg:flex-row items-center space-x-6 min-w-full  ">
+    <div className=" flex lg:flex-row items-center space-x-3 min-w-full  ">
       <div
-        style={{
-          background: accentColor,
-        }}
-        className=" w-[3rem] h-[3rem] flex items-center justify-center rounded-[50%]"
+        style={{}}
+        className=" w-[3rem] h-[3rem] text-black
+         flex items-center justify-center rounded-[50%]"
       >
         {icon}
       </div>
@@ -29,4 +29,4 @@ const ContactTile = ({
   );
 };
 
-export default ContactTile;
+export default ClassicContactTile;

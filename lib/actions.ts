@@ -11,6 +11,11 @@ export async function createSmartCard(details: CardDetails) {
     const data = await prisma.card.create({
       data: {
         linkId: id,
+        theme: {
+          color: details.theme.color,
+          layout: details.theme.layout,
+          action: details.theme.action,
+        },
         images: {
           logo: details.images.logo,
           profile: details.images.profile,

@@ -23,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={` ${myFont.className} antialiased`}>
+      <body className={` ${myFont.className} antialiased text-balance`}>
         <Toaster richColors position="top-right" />
         {children}
       </body>

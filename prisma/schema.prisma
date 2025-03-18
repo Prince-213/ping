@@ -16,11 +16,18 @@ datasource db {
 model Card {
   id       String       @id @default(auto()) @map("_id") @db.ObjectId
   linkId   String       @unique
+  theme    Theme
   images   CardImages
   personal CardPersonal
   general  CardGeneral
   social   CardSocial
   chat     CardChat
+}
+
+type Theme {
+  color  Int
+  layout Int
+  action Boolean
 }
 
 type CardImages {

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Check, Trash, X } from "lucide-react";
 import { TbExchange } from "react-icons/tb";
 import Image from "next/image";
@@ -6,6 +7,7 @@ import {
   BiBadge,
   BiBuilding,
   BiPlus,
+  BiSolidMapPin,
   BiSolidTrafficBarrier,
   BiUser,
 } from "react-icons/bi";
@@ -41,6 +43,7 @@ const CreateCard = ({
   selectedTheme,
   setSelectedTheme,
   handleImageChange,
+  onLayoutChange,
   cto,
   setCto,
   handleCoverChange,
@@ -49,6 +52,7 @@ const CreateCard = ({
 }: {
   cardDetails: CardDetails;
   setCardDetails: Dispatch<SetStateAction<CardDetails>>;
+  onLayoutChange: () => void;
   tempImages: TempImages;
   setTempImages: Dispatch<SetStateAction<TempImages>>;
   handleImageChange: (e: any) => Promise<void>;
@@ -69,10 +73,26 @@ const CreateCard = ({
       <div className=" space-y-4 mb-5">
         <h1 className=" font-medium  text-2xl">Change card theme</h1>
         <div className=" h-16 flex items-center gap-6">
+          <button
+            onClick={onLayoutChange}
+            className=" hover:shadow-md transition-all duration-200 flex items-center flex-col border-2 rounded-md p-2"
+          >
+            <TbExchange />
+          </button>
           {themes.map((item, index) => {
             return (
               <button
-                onClick={() => setSelectedTheme(index)}
+                onClick={() => {
+                  setSelectedTheme(index);
+                  setCardDetails({
+                    ...cardDetails,
+                    theme: {
+                      ...cardDetails.theme,
+                      color: index,
+                    },
+                  });
+                  console.log(cardDetails);
+                }}
                 key={index}
                 style={{
                   background: ` linear-gradient(-45deg, ${item.primaryText} 50%, ${item.button}) 50%  `,
@@ -103,7 +123,17 @@ const CreateCard = ({
           <input
             type="checkbox"
             checked={cto}
-            onChange={() => setCto(!cto)}
+            onChange={() => {
+              setCto(!cto);
+              setCardDetails({
+                ...cardDetails,
+                theme: {
+                  ...cardDetails.theme,
+                  action: !cto,
+                },
+              });
+              console.log(cardDetails);
+            }}
             className="sr-only peer"
           />
           <div className="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600 dark:peer-checked:bg-blue-600"></div>
@@ -867,6 +897,60 @@ const CreateCard = ({
                           general: {
                             ...cardDetails.general,
                             companyUrl: e.target.value,
+                          },
+                        })
+                      }
+                    />
+                  </div>
+                  <div className=" flex items-center p-4 border-t-[2px] border-gray-100 justify-between w-full">
+                    <div className=" space-x-2 ">
+                      <Button variant={"outline"}>Cancel</Button>
+                      <Button variant={"default"}>Save</Button>
+                    </div>
+                  </div>
+                </div>
+              </PopoverContent>
+            </Popover>
+
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant={"secondary"}
+                  className={` h-20 space-y-2 flex flex-col border-2 items-center ${
+                    cardDetails.general.address != ""
+                      ? " border-primaryCol-200 shadow-lg  "
+                      : "border-gray-200"
+                  } `}
+                >
+                  {cardDetails.general.companyUrl != "" ? (
+                    <div className=" flex flex-col items-center">
+                      <FaRegEdit size={32} />
+                      <h1>Address</h1>
+                    </div>
+                  ) : (
+                    <div className=" flex flex-col items-center">
+                      <BiSolidMapPin size={32} />
+                      <h1>Address</h1>
+                    </div>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className=" w-[30rem] rounded-xl p-0">
+                <div className=" w-full">
+                  <div className=" flex items-center justify-between w-full px-4 py-4 border-b-[2px] border-gray-100">
+                    <h1 className=" font-medium text-xl">Address</h1>
+                  </div>
+                  <div className=" p-4">
+                    <textarea
+                      placeholder="Enter your address or business address "
+                      className=" w-full border-2 p-3 "
+                      value={cardDetails.general.address}
+                      onChange={(e) =>
+                        setCardDetails({
+                          ...cardDetails,
+                          general: {
+                            ...cardDetails.general,
+                            address: e.target.value,
                           },
                         })
                       }

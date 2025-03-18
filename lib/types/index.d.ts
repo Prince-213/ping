@@ -39,11 +39,18 @@ interface CardChat {
 }
 
 interface CardDetails {
+  theme: Theming;
   images: CardImages;
   personal: CardPersonal;
   general: CardGeneral;
   social: CardSocial;
   chat: CardChat;
+}
+
+interface Theming {
+  color: number;
+  layout: number;
+  action: boolean;
 }
 
 interface TempImages {
