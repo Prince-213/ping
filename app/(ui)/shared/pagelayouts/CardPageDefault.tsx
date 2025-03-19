@@ -9,7 +9,6 @@ import { IoGlobe, IoMail } from "react-icons/io5";
 import { DownloadCloud } from "lucide-react";
 import { TbExchange } from "react-icons/tb";
 import { motion } from "motion/react";
-import { ReactTyped } from "react-typed";
 
 const CardPageDefault = ({
   cardDetails,
@@ -66,14 +65,14 @@ const CardPageDefault = ({
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className=" capitalize font-medium text-3xl text-balance"
+              className=" capitalize font-medium text-2xl text-balance"
             >
               {cardDetails?.personal.name}
             </motion.h1>{" "}
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className=" font-medium text-lg leading-normal max-w-[80%] text-balance capitalize  "
+              className=" font-medium text-base leading-normal max-w-[70%] text-balance capitalize  "
             >
               {cardDetails?.personal.jobTitle}{" "}
               {cardDetails?.personal.companyName && "at"}{" "}
@@ -129,7 +128,15 @@ const CardPageDefault = ({
             animate={{ opacity: 1, y: 0 }}
             className="  text-gray-400 leading-loose w-full"
           >
-            {cardDetails && <ReactTyped strings={[cardDetails.personal.bio]} />}
+            {cardDetails && (
+              <motion.p
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                className="  text-gray-600 text-pretty text-justify leading-loose"
+              >
+                {cardDetails.personal.bio}
+              </motion.p>
+            )}
           </motion.div>
         </div>
 

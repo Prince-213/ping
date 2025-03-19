@@ -8,12 +8,14 @@ import ConfettiExplosion from "react-confetti-explosion";
 
 import { Button } from "@/components/ui/button";
 
+import { Clipboard } from "flowbite-react";
+
 import axios from "axios";
 import { toast } from "sonner";
 import { FaSpinner } from "react-icons/fa";
 import { createSmartCard } from "@/lib/actions";
 
-import { GiCloudDownload, GiGlobe } from "react-icons/gi";
+import { GiCloudDownload } from "react-icons/gi";
 import { QRCode } from "react-qrcode-logo";
 import { getBaseUrl } from "@/lib/utils";
 
@@ -170,21 +172,6 @@ export default function Page() {
     particleCount: 60,
     floorHeight: 1000,
     floorWidth: 1000,
-  };
-
-  const copyToClipboard = async (text: string) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      console.log("Text copied to clipboard:", text);
-      alert("Copied to clipboard!"); // Optional: Show feedback to the user
-    } catch (err) {
-      console.error("Failed to copy text:", err);
-      alert("Failed to copy text!"); // Optional: Show error feedback
-    }
-  };
-
-  const handleClick = () => {
-    copyToClipboard(url);
   };
 
   const [layout, setLayout] = useState(1);
@@ -411,16 +398,26 @@ export default function Page() {
                 </div>
 
                 <div className=" flex items-center space-x-4">
-                  <Button
-                    onClick={handleClick}
-                    className=" w-fit h-fit"
-                    variant={"outline"}
-                  >
-                    <GiGlobe size={32} />
-                    <p>Copy URL</p>
-                  </Button>
+                  <div className="grid w-full max-w-80">
+                    <div className="relative">
+                      <label htmlFor="npm-install" className="sr-only">
+                        Label
+                      </label>
+                      <input
+                        id="npm-install"
+                        type="text"
+                        className="col-span-6 block w-full rounded-lg border border-gray-300 bg-gray-50 px-2.5 py-4 text-sm text-gray-500 focus:border-blue-500 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder:text-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
+                        value="copy & share link"
+                        disabled
+                        readOnly
+                      />
+                      <Clipboard.WithIconText
+                        valueToCopy={`${getBaseUrl}/${url}`}
+                      />
+                    </div>
+                  </div>
 
-                  <Button className=" w-fit h-fit" variant={"outline"}>
+                  <Button className=" w-fit h-fit p-4" variant={"outline"}>
                     <GiCloudDownload size={32} />
                     <p>Download QR Code</p>
                   </Button>

@@ -6,10 +6,7 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const getBaseUrl = (): string => {
-  const siteUrl =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:3000"
-      : "https://medical-dash-gamma.vercel.app";
+  const siteUrl = "http://localhost:3000";
 
   return siteUrl;
 };
